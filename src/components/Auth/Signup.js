@@ -3,7 +3,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { postRegister } from "../../services/apiServices";
 import { toast } from "react-toastify";
-
+import { MdOutlineEmail } from "react-icons/md";
+import { TbPasswordUser } from "react-icons/tb";
+import { SiGnuprivacyguard } from "react-icons/si";
+import { BiBody } from "react-icons/bi";
+import { FaHome } from "react-icons/fa";
 const Signup = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -45,7 +49,9 @@ const Signup = (props) => {
           <div className="body-form">
             <div className="content-email-username">
               <div className="form-control">
-                <label>Email : </label>
+                <label>
+                  Email <MdOutlineEmail /> (*):
+                </label>
                 <input
                   type="email"
                   value={email}
@@ -53,7 +59,9 @@ const Signup = (props) => {
                 ></input>
               </div>
               <div className="form-control">
-                <label>Username : </label>
+                <label>
+                  Username <BiBody /> :
+                </label>
                 <input
                   value={username}
                   onChange={(event) => setUsername(event.target.value)}
@@ -61,7 +69,9 @@ const Signup = (props) => {
               </div>
             </div>
             <div className="form-control">
-              <label>Password : </label>
+              <label>
+                Password <TbPasswordUser /> (*):
+              </label>
               <input
                 type="password"
                 value={password}
@@ -72,14 +82,16 @@ const Signup = (props) => {
           <div className="footer-form-login">
             <label className="forgot-password">Forgot password</label>
             <br />
-            <button onClick={() => handleSignup()}> Signup to ThanhDat </button>
+            <button onClick={() => handleSignup()}>
+              <SiGnuprivacyguard /> Signup to ThanhDat
+            </button>
             <br />
             <label
               onClick={() => {
                 navigate("/");
               }}
             >
-              Go back home
+              <FaHome /> Go back home
             </label>
           </div>
         </div>

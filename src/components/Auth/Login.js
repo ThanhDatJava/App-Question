@@ -4,26 +4,31 @@ import { useNavigate } from "react-router-dom";
 import { postLogin } from "../../services/apiServices";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
+import { doLogin } from "../../redux/action/userAction";
+import { ImSpinner2 } from "react-icons/im";
+import { MdOutlineEmail } from "react-icons/md";
+import { TbPasswordUser } from "react-icons/tb";
+import { IoHomeSharp } from "react-icons/io5";
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const [isLoading, setIsLoading] = useState(false);
   const handleLogin = async () => {
     //validate
     //submit apis
+    setIsLoading(true);
     let data = await postLogin(email, password);
     if (data && data.EC === 0) {
-      dispatch({
-        type: "FETCH_USER_LOGIN_SUCCESS",
-        payload: data,
-      });
+      dispatch(doLogin(data));
       toast.success(data.EM);
+      setIsLoading(false);
       navigate("/");
     }
     if (data && data.EC !== 0) {
       toast.error(data.EM);
+      setIsLoading(false);
     }
   };
   const handleClickBtnSignup = () => {
@@ -35,7 +40,7 @@ const Login = (props) => {
         <div className="header-login">
           <span>If you do not already have an account</span>
           <button
-            className="btn btn-primary "
+            className="btn btn-success "
             onClick={() => handleClickBtnSignup()}
           >
             Sign up
@@ -47,7 +52,9 @@ const Login = (props) => {
           </div>
           <div className="body-form">
             <div className="form-control">
-              <label>Email : </label>
+              <label>
+                Email <MdOutlineEmail /> :
+              </label>
               <input
                 type="email"
                 value={email}
@@ -55,7 +62,9 @@ const Login = (props) => {
               ></input>
             </div>
             <div className="form-control">
-              <label>Password : </label>
+              <label>
+                Password <TbPasswordUser /> :
+              </label>
               <input
                 type="password"
                 value={password}
@@ -66,14 +75,19 @@ const Login = (props) => {
           <div className="footer-form-login">
             <label className="forgot-password">Forgot password</label>
             <br />
-            <button onClick={() => handleLogin()}> Login to ThanhDat </button>
+            <button onClick={() => handleLogin()} disabled={isLoading}>
+              {isLoading === true && (
+                <ImSpinner2 className="loader-icon mx-2" />
+              )}
+              Login to ThanhDat{" "}
+            </button>
             <br />
             <label
               onClick={() => {
                 navigate("/");
               }}
             >
-              Go back home
+              <IoHomeSharp /> Go back home
             </label>
           </div>
         </div>
