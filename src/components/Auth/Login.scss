@@ -1,0 +1,79 @@
+.login-container {
+  .header-login {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 20px;
+    margin-top: 20px;
+    gap: 10px;
+  }
+
+  .form-login {
+    display: flex;
+    flex-direction: column;
+
+    margin: 0 auto;
+    .title-login-form {
+      display: flex;
+      justify-content: center;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .body-form {
+      .form-control {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        border: none;
+        label {
+          display: block;
+          margin-bottom: 5px;
+          font-weight: bold;
+        }
+        input {
+          padding: 5px;
+          font-size: 16px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+        }
+
+        // Optionally, you can define styles for when the input is focused
+        input:focus {
+          outline: none;
+          border-color: #007bff; // Change color to your preference
+        }
+      }
+    }
+    // footer-form-login {
+    //   display: flex;
+    //   flex-direction: column;
+    // }
+    .footer-form-login {
+      text-align: center;
+      margin-top: 20px;
+      .forgot-password {
+        display: flex;
+        margin-left: 10px;
+      }
+      label {
+        cursor: pointer;
+      }
+
+      button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-size: 16px;
+        margin-bottom: 10px;
+
+        &:hover {
+          background-color: #0056b3;
+        }
+      }
+    }
+  }
+}
