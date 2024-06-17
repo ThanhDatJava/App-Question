@@ -32,6 +32,7 @@ const DetailQuiz = (props) => {
               questionDescription = item.description;
               image = item.image;
             }
+            item.answers.isSelected = false;
             answers.push(item.answers);
           });
 
@@ -50,6 +51,54 @@ const DetailQuiz = (props) => {
   const handleNext = () => {
     if (dataQuiz && dataQuiz.length > index + 1) setIndex(index + 1);
   };
+  const handleCheckbox = (answerId, questionId) => {
+    let dataQuizClone = _.cloneDeep(dataQuiz);
+    let question = dataQuizClone.find(
+      (item) => +item.questionId === +questionId
+    );
+    if (question && question.answers) {
+      question.answers = question.answers.map((item) => {
+        if (+item.id === +answerId) {
+          item.isSelected = !item.isSelected;
+        }
+        return item;
+      });
+
+      // console.log(b);
+    }
+    let index = dataQuizClone.findIndex(
+      (item) => +item.questionId === +questionId
+    );
+    if (index > -1) {
+      dataQuizClone[index] = question;
+      setDataQuiz(dataQuizClone);
+    }
+  };
+  const handleFinishQuiz = () => {
+    console.log(">>> check data before submit", dataQuiz);
+    let payload = {
+      quizId: +quizId,
+      answers: [],
+    };
+    let answers = [];
+    if (dataQuiz && dataQuiz.length > 0) {
+      dataQuiz.forEach((question) => {
+        let questionId = question.questionId;
+        let userAnswerId = [];
+        question.answers.forEach((a) => {
+          if (a.isSelected === true) {
+            userAnswerId.push(a.id);
+          }
+        });
+        answers.push({
+          questionId: +questionId,
+          userAnswerId: userAnswerId,
+        });
+      });
+      payload.answers = answers;
+      console.log("final", payload);
+    }
+  };
   return (
     <div className="detail-quiz-container">
       <div className="left-content">
@@ -60,6 +109,7 @@ const DetailQuiz = (props) => {
         <div className="q-body"></div>
         <div className="q-content">
           <Question
+            handleCheckbox={handleCheckbox}
             index={index}
             data={dataQuiz && dataQuiz.length > 0 ? dataQuiz[index] : []}
           />
@@ -71,7 +121,10 @@ const DetailQuiz = (props) => {
           <button className="btn btn-primary " onClick={() => handleNext()}>
             Next
           </button>
-          <button className="btn btn-warning " onClick={() => handleNext()}>
+          <button
+            className="btn btn-warning "
+            onClick={() => handleFinishQuiz()}
+          >
             Finish
           </button>
         </div>
@@ -80,4 +133,5 @@ const DetailQuiz = (props) => {
     </div>
   );
 };
+
 export default DetailQuiz;
