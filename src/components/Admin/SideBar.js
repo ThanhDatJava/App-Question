@@ -26,10 +26,10 @@ import sidebarBg from "../../assets/img-sidebar.jpg";
 import { TbBrandRedux } from "react-icons/tb";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { BiAnchor } from "react-icons/bi";
-
+import { useNavigate } from "react-router-dom";
 const SideBar = (props) => {
   const { image, collapsed, toggled, handleToggleSidebar } = props;
-
+  const navagate = useNavigate();
   return (
     <>
       <ProSidebar
@@ -53,7 +53,7 @@ const SideBar = (props) => {
             }}
           >
             <TbBrandRedux size={"3em"} color={"00bfff"} />
-            <span>Thành Đạt</span>
+            <span onClick={() => navagate("/")}>Thành Đạt</span>
           </div>
         </SidebarHeader>
         <SidebarContent>
@@ -69,7 +69,10 @@ const SideBar = (props) => {
                 Quản lý User
                 <Link to="/admins/manage-users"></Link>
               </MenuItem>
-              <MenuItem> Quản lý Bài Quiz</MenuItem>
+              <MenuItem>
+                Quản lý Bài Quiz
+                <Link to="/admins/manage-quizzes"></Link>
+              </MenuItem>
               <MenuItem> Quản lý Question</MenuItem>
             </SubMenu>
           </Menu>

@@ -4,7 +4,7 @@ import { FaBars } from "react-icons/fa";
 import { useState } from "react";
 import { Form, Outlet } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-
+import PerfectScrollbar from "react-perfect-scrollbar";
 const Admin = (props) => {
   const [collapsed, setcollapsed] = useState(false);
   return (
@@ -17,8 +17,11 @@ const Admin = (props) => {
           <div className="admin-header">
             <FaBars onClick={() => setcollapsed(!collapsed)} />
           </div>
+
           <div className="admin-main">
-            <Outlet />
+            <PerfectScrollbar>
+              <Outlet />
+            </PerfectScrollbar>
           </div>
         </div>
       </div>
