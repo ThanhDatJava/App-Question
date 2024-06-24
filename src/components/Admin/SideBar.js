@@ -52,8 +52,10 @@ const SideBar = (props) => {
               whiteSpace: "nowrap",
             }}
           >
-            <TbBrandRedux size={"3em"} color={"00bfff"} />
-            <span onClick={() => navagate("/")}>Thành Đạt</span>
+            <span onClick={() => navagate("/")} style={{ cursor: "pointer" }}>
+              <TbBrandRedux size={"3em"} color={"00bfff"} />
+              Thành Đạt
+            </span>
           </div>
         </SidebarHeader>
         <SidebarContent>
@@ -89,7 +91,7 @@ const SideBar = (props) => {
             }}
           >
             <a
-              href="https://github.com/ThanhDatJava/ThanhProject-ReactApp-demo2"
+              href="https://github.com/ThanhDatJava/App-Question"
               target="_blank"
               className="sidebar-btn"
               rel="noopener noreferrer"
