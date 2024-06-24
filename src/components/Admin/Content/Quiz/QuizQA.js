@@ -1,20 +1,22 @@
 import { useEffect, useState } from "react";
 import Select from "react-select";
-import "./Questions.scss";
+import "./QuizQA.scss";
 import { PiCalendarPlusFill } from "react-icons/pi";
 import { MdDelete } from "react-icons/md";
 import { RiImageAddFill } from "react-icons/ri";
 import { v4 as uuidv4 } from "uuid";
 import _ from "lodash";
 import Lightbox from "react-awesome-lightbox";
+
 import {
   getAllQuizForAdmin,
   postCreateNewAnswerForQuestion,
   postCreateNewQuestionForQuiz,
+  getQuizWithQA,
 } from "../../../../services/apiServices";
 import { toast } from "react-toastify";
 
-const Questions = (props) => {
+const QuizQA = (props) => {
   const initQuestions = [
     {
       id: uuidv4(),
@@ -31,16 +33,54 @@ const Questions = (props) => {
     },
   ];
   const [questions, setQuestions] = useState(initQuestions);
-  const [selectedQuiz, setSelectedQuiz] = useState({});
+
   const [isPreviewImage, setIsPreviewImage] = useState(false);
   const [dataImagePreview, setDataImagePreview] = useState({
     title: "",
     url: "",
   });
+
+  const [selectedQuiz, setSelectedQuiz] = useState({});
   const [listQuiz, setListQuiz] = useState([]);
   useEffect(() => {
     fetchQuiz();
   }, []);
+
+  useEffect(() => {
+    if (selectedQuiz && selectedQuiz.value) {
+      fetchQuizWithQA();
+    }
+  }, [selectedQuiz]);
+  function urltoFile(url, filename, mimeType) {
+    return fetch(url)
+      .then(function (res) {
+        return res.arrayBuffer();
+      })
+      .then(function (buf) {
+        return new File([buf], filename, { type: mimeType });
+      });
+  }
+  const fetchQuizWithQA = async () => {
+    let rs = await getQuizWithQA(selectedQuiz.value);
+    if (rs && rs.EC === 0) {
+      //convert base64 to file
+      let newQA = [];
+      for (let i = 1; i < rs.DT.qa.length; i++) {
+        let q = rs.DT.qa[i];
+        if (q.imageFile) {
+          q.imageName = `Question-${q.id}.png`;
+          q.imageFile = await urltoFile(
+            `data:image/png;base64,${q.imageFile}`,
+            `Question-${q.id}.png`,
+            "image/png"
+          );
+        }
+        newQA.push(q);
+      }
+
+      setQuestions(newQA);
+    }
+  };
   const fetchQuiz = async () => {
     let res = await getAllQuizForAdmin();
     if (res && res.EC === 0) {
@@ -197,8 +237,8 @@ const Questions = (props) => {
         );
       }
     }
-    setQuestions(initQuestions);
     toast.success("Create questions and answer succed !");
+    setQuestions(initQuestions);
   };
   const handlePreviewImage = (questionId) => {
     let questionsClone = _.cloneDeep(questions);
@@ -213,8 +253,6 @@ const Questions = (props) => {
   };
   return (
     <div className="questions-container">
-      <div className="title">Manage Questions</div>
-      <hr />
       <div className="add-new-questions">
         <div className="col-6 form-group">
           <label className="mb-2">Select Quiz : </label>
@@ -375,4 +413,4 @@ const Questions = (props) => {
     </div>
   );
 };
-export default Questions;
+export default QuizQA;
