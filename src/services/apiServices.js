@@ -1,5 +1,5 @@
 import axios from "../utils/axiosCustomize";
-import { delay } from "lodash";
+// import { delay } from "lodash";
 const postCreateNewUser = (email, password, username, role, image) => {
   //submit data
   const data = new FormData();
@@ -37,7 +37,7 @@ const postLogin = (userEmail, userPassword) => {
   return axios.post("api/v1/login", {
     email: userEmail,
     password: userPassword,
-    delay: 3000,
+    delay: 2000,
   });
 };
 
@@ -99,6 +99,9 @@ const postAssignQuiz = (quizId, userId) => {
 const getQuizWithQA = (quizId) => {
   return axios.get(`api/v1/quiz-with-qa/${quizId}`);
 };
+const postUpsertQA = (data) => {
+  return axios.post("api/v1/quiz-upsert-qa", { ...data });
+};
 export {
   postCreateNewUser,
   getAllUsers,
@@ -116,4 +119,5 @@ export {
   postCreateNewAnswerForQuestion,
   postAssignQuiz,
   getQuizWithQA,
+  postUpsertQA,
 };
