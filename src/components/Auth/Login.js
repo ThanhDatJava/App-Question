@@ -9,6 +9,7 @@ import { ImSpinner2 } from "react-icons/im";
 import { MdOutlineEmail } from "react-icons/md";
 import { TbPasswordUser } from "react-icons/tb";
 import { IoHomeSharp } from "react-icons/io5";
+import Language from "../Header/Language";
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -34,6 +35,11 @@ const Login = (props) => {
   const handleClickBtnSignup = () => {
     navigate("/signup");
   };
+  const handleKeyDown = (event) => {
+    if (event && event.key === "Enter") {
+      handleLogin();
+    }
+  };
   return (
     <>
       <div className="login-container ">
@@ -45,6 +51,7 @@ const Login = (props) => {
           >
             Sign up
           </button>
+          <Language />
         </div>
         <div className="form-login col-4">
           <div className="title-login-form">
@@ -69,6 +76,7 @@ const Login = (props) => {
                 type="password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
+                onKeyDown={(event) => handleKeyDown(event)}
               ></input>
             </div>
           </div>
@@ -79,7 +87,7 @@ const Login = (props) => {
               {isLoading === true && (
                 <ImSpinner2 className="loader-icon mx-2" />
               )}
-              Login to ThanhDat{" "}
+              Login to ThanhDat
             </button>
             <br />
             <label

@@ -8,6 +8,7 @@ import { TbPasswordUser } from "react-icons/tb";
 import { SiGnuprivacyguard } from "react-icons/si";
 import { BiBody } from "react-icons/bi";
 import { FaHome } from "react-icons/fa";
+import Language from "../Header/Language";
 const Signup = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,6 +42,7 @@ const Signup = (props) => {
           >
             Log in
           </button>
+          <Language />
         </div>
         <div className="form-login col-4">
           <div className="title-login-form">

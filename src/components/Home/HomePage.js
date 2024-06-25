@@ -1,9 +1,11 @@
 import videoHomepage from "../../assets/video-homepage.mp4";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { useTranslation, Trans } from "react-i18next";
 const HomePage = (props) => {
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
   const navigate = useNavigate();
+  const { t } = useTranslation();
   return (
     <>
       <div className="homepage-container">
@@ -11,10 +13,8 @@ const HomePage = (props) => {
           <source src={videoHomepage} type="video/mp4" />
         </video>
         <div className="homepage-content">
-          <div className="title-1">Make a difference :</div>
-          <div className="title-2">
-            Explore the treasure of knowledge to shape the future and innovate
-          </div>
+          <div className="title-1">{t("homepage.title1")}</div>
+          <div className="title-2">{t("homepage.title2")}</div>
           <div className="title-3">
             {isAuthenticated === false ? (
               <button
@@ -23,7 +23,7 @@ const HomePage = (props) => {
                   navigate("/login");
                 }}
               >
-                Get's started. It's free{" "}
+                {t("homepage.title4")}
               </button>
             ) : (
               <button
@@ -32,7 +32,7 @@ const HomePage = (props) => {
                   navigate("/users");
                 }}
               >
-                Doing Quiz Now
+                {t("homepage.title3")}
               </button>
             )}
           </div>
