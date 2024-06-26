@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { getAllQuizForAdmin } from "../../../../services/apiServices";
+import {
+  deleteQuiz,
+  getAllQuizForAdmin,
+} from "../../../../services/apiServices";
+import { toast } from "react-toastify";
 
 const TableQuiz = (props) => {
   const [listQuiz, setListQuiz] = useState([]);
@@ -11,7 +15,15 @@ const TableQuiz = (props) => {
     if (res && res.EC === 0) {
       setListQuiz(res.DT);
     }
-    console.log("check res", res);
+  };
+  const handleClickDeleteQuiz = async (id) => {
+    let res = await deleteQuiz(id);
+    console.log("check data delete", res);
+    if (res && res.DT && res.DT.EC === 0) {
+      toast.success(res.DT.EM);
+    } else {
+      toast.error(res.DT.EM);
+    }
   };
   return (
     <>
@@ -23,7 +35,6 @@ const TableQuiz = (props) => {
             <th scope="col">Name</th>
             <th scope="col">Description</th>
             <th scope="col">Type</th>
-            <th scope="col">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -42,8 +53,13 @@ const TableQuiz = (props) => {
                       justifyContent: "center",
                     }}
                   >
-                    <button className="btn btn-warning">Edit</button>
-                    <button className="btn btn-danger">Delete</button>
+                    {/* <button className="btn btn-warning">Edit</button>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => handleClickDeleteQuiz()}
+                    >
+                      Delete
+                    </button> */}
                   </td>
                 </tr>
               );

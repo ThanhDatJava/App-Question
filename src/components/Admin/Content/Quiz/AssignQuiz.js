@@ -31,7 +31,7 @@ const AssignQuiz = (props) => {
 
   const fetchUser = async () => {
     let res = await getAllUsers();
-    console.log(res);
+
     if (res && res.EC === 0) {
       let users = res.DT.map((item) => {
         return {

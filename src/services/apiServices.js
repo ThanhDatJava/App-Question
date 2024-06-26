@@ -68,9 +68,14 @@ const postCreateNewQuiz = (description, name, difficulty, image) => {
   return axios.post("api/v1/quiz", data);
 };
 
+const deleteQuiz = (id) => {
+  return axios.delete("api/v1/quiz/1", { id });
+};
+
 const getAllQuizForAdmin = () => {
   return axios.get(`api/v1/quiz/all`);
 };
+
 const postCreateNewQuestionForQuiz = (quiz_id, description, image) => {
   const data = new FormData();
   data.append("quiz_id", quiz_id);
@@ -128,4 +133,5 @@ export {
   postUpsertQA,
   logout,
   getOverview,
+  deleteQuiz,
 };
