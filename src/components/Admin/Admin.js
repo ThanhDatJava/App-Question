@@ -5,6 +5,8 @@ import { useState } from "react";
 import { Form, Outlet } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import PerfectScrollbar from "react-perfect-scrollbar";
+import Language from "../Header/Language";
+import { NavDropdown } from "react-bootstrap";
 const Admin = (props) => {
   const [collapsed, setcollapsed] = useState(false);
   return (
@@ -15,7 +17,17 @@ const Admin = (props) => {
         </div>
         <div className="admin-content">
           <div className="admin-header">
-            <FaBars onClick={() => setcollapsed(!collapsed)} />
+            <span onClick={() => setcollapsed(!collapsed)}>
+              <FaBars className="leftside" />
+            </span>
+
+            <div className="rightside">
+              <Language />
+              <NavDropdown title="Settings" id="basic-nav-dropdown">
+                <NavDropdown.Item>Profile</NavDropdown.Item>
+                <NavDropdown.Item>Logout</NavDropdown.Item>
+              </NavDropdown>
+            </div>
           </div>
 
           <div className="admin-main">

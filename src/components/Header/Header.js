@@ -62,7 +62,7 @@ const Header = () => {
               <NavDropdown title="Settings" id="basic-nav-dropdown">
                 <NavDropdown.Item>Profile</NavDropdown.Item>
                 <NavDropdown.Item onClick={() => handleLogOut()}>
-                  Logout{" "}
+                  Logout
                 </NavDropdown.Item>
               </NavDropdown>
             )}
